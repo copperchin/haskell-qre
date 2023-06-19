@@ -1,0 +1,49 @@
+cabal-version:      2.4
+name:               qrfactory
+version:            0.1.0.0
+
+-- A short (one-line) description of the package.
+synopsis:           CLI for generating Wifi-access QR Codes as PNGs
+
+-- A longer description of the package.
+-- description:
+-- A URL where users can report bugs.
+-- bug-reports:
+author:             Ryan de Kleer
+maintainer:         thinking.as.a.hobby@gmail.com
+copyright:          Copyright (c) 2023 Ryan de Kleer
+license:            MIT
+category:           qr, cli-tool, application
+extra-source-files: CHANGELOG.md
+
+common common-settings
+  default-language: Haskell2010
+  build-depends:
+    , base                  >=4.8.2.0 && <5
+    , bytestring
+    , case-insensitive
+    , hformat
+    , JuicyPixels
+    , optparse-applicative
+    , qrcode-core
+    , qrcode-juicypixels
+    , string-interpolate
+    , vector
+
+  ghc-options:      -Wall
+
+executable qrfactory
+  import:         common-settings
+  hs-source-dirs: app
+  main-is:        Main.hs
+  other-modules:  Cmd
+  build-depends:  qrfactory
+
+-- LANGUAGE extensions used by modules in this package.
+-- other-extensions:
+library
+  import:          common-settings
+  hs-source-dirs:  src
+  exposed-modules:
+    Assembler
+    Wifi
