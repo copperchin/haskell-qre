@@ -1,12 +1,17 @@
 {-# LANGUAGE QuasiQuotes #-}
 
-module Wifi (generateScheme, SSID, NetworkCredentials (..), Security (..)) where
+module QRE.Data.Network (
+    generateScheme,
+    SSID,
+    Credentials (..),
+    Security (..),
+) where
 
-import Data.String.Interpolate
+import Data.String.Interpolate (i)
 
 type SSID = String
 
-newtype NetworkCredentials = Auth (SSID, Security)
+newtype Credentials = Auth (SSID, Security)
     deriving (Eq, Show)
 
 data Security
@@ -21,7 +26,7 @@ instance Show Security where
     show (WEP _) = "<WEP password>: *******"
 
 -- TODO: do we need to escape special chars in ssid & pass?
-generateScheme :: NetworkCredentials -> Bool -> String
+generateScheme :: Credentials -> Bool -> String
 generateScheme (Auth (ssid, security)) hideName =
     case security of
         None ->

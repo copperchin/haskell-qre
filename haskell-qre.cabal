@@ -1,12 +1,15 @@
 cabal-version:      2.4
-name:               qrfactory
+name:               haskell-qre
 version:            0.1.0.0
 
 -- A short (one-line) description of the package.
-synopsis:           CLI for generating Wifi-access QR Codes as PNGs
+synopsis:
+  Quick Response Encoder -- Application for generating QR Codes
 
 -- A longer description of the package.
--- description:
+-- description: CLI command : QRE authnet
+generating Wifi-access
+
 -- A URL where users can report bugs.
 -- bug-reports:
 author:             Ryan de Kleer
@@ -32,18 +35,20 @@ common common-settings
 
   ghc-options:      -Wall
 
-executable qrfactory
+executable qre
   import:         common-settings
+  build-depends:  haskell-qre
   hs-source-dirs: app
   main-is:        Main.hs
-  other-modules:  Cmd
-  build-depends:  qrfactory
 
+-- other-modules:
 -- LANGUAGE extensions used by modules in this package.
 -- other-extensions:
 library
   import:          common-settings
   hs-source-dirs:  src
   exposed-modules:
-    Assembler
-    Wifi
+    QRE
+    QRE.Assembler
+    QRE.CLI
+    QRE.Data.Network

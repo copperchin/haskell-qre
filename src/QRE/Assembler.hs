@@ -1,4 +1,4 @@
-module Assembler where
+module QRE.Assembler where
 
 import Codec.Picture (PngSavable (encodePng))
 import qualified Codec.QRCode as QR

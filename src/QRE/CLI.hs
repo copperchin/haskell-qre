@@ -1,14 +1,13 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
 
 {-# HLINT ignore "Use camelCase" #-}
-module Cmd (argparse, Options (..)) where
+module QRE.CLI (argparse, Options (..)) where
 
--- (NetworkCredentials (..), SSID, Security (..))
 import Codec.QRCode (ErrorLevel (..))
-import Control.Exception
+import Control.Exception (Exception, throw)
 import Data.List (intercalate)
 import Options.Applicative
-import Wifi
+import QRE.Data.Network (Credentials (..), SSID, Security (..))
 
 data ArgParseError = MissingPassword | MissingEncryption deriving (Eq)
 instance Exception ArgParseError
@@ -26,7 +25,7 @@ data Options = Options
     { hideName :: Bool
     -- ^ is network name hidden?
     , output :: FilePath
-    , credentials :: NetworkCredentials
+    , credentials :: Credentials
     , grade :: ErrorLevel
     }
     deriving (Show, Eq)
@@ -88,7 +87,7 @@ encryption_opt = comp <$> encryptionK_opt <*> secretpass_arg
     comp Nothing _ = throw MissingEncryption
     comp _ Nothing = throw MissingPassword
 
-credP :: Parser NetworkCredentials
+credP :: Parser Credentials
 credP = Auth <$> ((,) <$> ssid_arg <*> encryption_opt)
 
 correctionP :: Parser ErrorLevel
